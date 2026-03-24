@@ -3,39 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>DASH Player</title>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.js"></script>
 </head>
 <body>
 
-<h2>เล่นวิดีโอ</h2>
+<video id="videoPlayer" controls autoplay width="640"></video>
 
-<video id="video" width="800" controls autoplay></video>
-
+<script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
 <script>
-async function init() {
-  const video = document.getElementById('video');
-  const player = new shaka.Player(video);
-
-  // 🔐 ใส่ License Server ของคุณตรงนี้
-  player.configure({
-    drm: {
-      servers: {
-        "com.widevine.alpha": "YOUR_LICENSE_URL",
-        "com.microsoft.playready": "YOUR_LICENSE_URL"
-      }
-    }
-  });
-
-  try {
-    await player.load("https://infominyak.my/m.php?proxy_manifest=aHR0cHM6Ly9jZG4xMGp0ZWRnZS5pbmRpaG9tZXR2LmNvbS9hdG0vREFTSC9oYm8vbWFuaWZlc3QubXBk");
-    console.log("เล่นได้แล้ว");
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', init);
+  var url = "https://infominyak.my/m.php?proxy_manifest=aHR0cHM6Ly9jZG4xMGp0ZWRnZS5pbmRpaG9tZXR2LmNvbS9hdG0vREFTSC9oYm8vbWFuaWZlc3QubXBk";
+  
+  var player = dashjs.MediaPlayer().create();
+  player.initialize(document.querySelector("#videoPlayer"), url, true);
 </script>
 
 </body>
